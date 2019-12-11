@@ -10,13 +10,34 @@
     <link rel="stylesheet" href="/static/bootstrap/bootstrap.css">
 </head>
 <body>
-    <h1>Post list!</h1>
-    {% for post in posts %}
-        <div>{{ post.title }}</div>
-        <span>{{ post.author }}</span>
-        <span>{{ post.created_date }}</span>
-        <span>{{ post.publised_date }}</span>
-    {% endfor %}
+    <div id="wrap">
+        <nav class="navbar navbar-expand navbar-dark bg-dark">
+            <a href="#" class="navbar-brand">DjangoGirls</a>
+
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Post List</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container-fluid pt-2">
+            {% for post in posts %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                        <!--linebreaksbr: 줄바꿈 br태그로 변환
+                        truncatechars:250: 뒤에 지정한 글자수만큼만 표시 후 말줄임표-->
+                    <p class="card-text">{{ post.text|linebreaksbr|truncatechars:250 }}</p>
+                    <div class="text-right">
+                        <span>{{ post.created_date }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 </body>
 </html>
 
