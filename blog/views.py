@@ -54,3 +54,12 @@ def post_detail(request, pk):
 
     return render(request, 'post_detail.html', context)
 
+def post_add(request):
+    # URL: /posts/add
+    # View: 이 함수
+    # Template: post_add.html
+    # form 태그 내부에
+    # input, textarea, button[type=submit]
+    # base.html의 nav 안에 /posts/add/로의 링크 하나 추가
+    # 링크 텍스트 Post Add
+    return render(request, 'post_add.html')
