@@ -4,7 +4,7 @@
         <div class="card mb-3">
             <div class="card-body">
                 <!--아래 텍스트에 링크추가, 클릭 시 해당하는 /post-detail/어딘가/로 이동하도록 함-->
-                <h5 class="card-title"><a href="/post-detail/{{post.pk}}/">{{ post.title }}</a></h5>
+                <h5 class="card-title"><a href="{%url 'url-name-post-detail' pk=post.pk %}">{{ post.title }}</a></h5>
                     <!--linebreaksbr: 줄바꿈 br태그로 변환
                     truncatechars:250: 뒤에 지정한 글자수만큼만 표시 후 말줄임표-->
                 <p class="card-text">{{ post.text|linebreaksbr|truncatechars:250 }}</p>
