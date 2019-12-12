@@ -55,6 +55,7 @@ def post_detail(request, pk):
     return render(request, 'post_detail.html', context)
 
 def post_add(request):
+    print(request)
     # URL: /posts/add
     # View: 이 함수
     # Template: post_add.html
