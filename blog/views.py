@@ -53,3 +53,4 @@ def post_detail(request, pk):
     context = {'post': post,}
 
     return render(request, 'post_detail.html', context)
+
