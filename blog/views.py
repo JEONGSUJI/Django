@@ -17,3 +17,10 @@ def post_list(request):
     context = {'posts': posts}
 
     return render(request, 'post_list.html', context)
+
+def post_detail(request):
+    # URL: /post-detail/
+    # View: post_detail
+    # Template: post_detail.html
+    # 내용으로 <h1>Post Detail!</h1>을 갖도록 함
+    return render(request, 'post_detail.html')
