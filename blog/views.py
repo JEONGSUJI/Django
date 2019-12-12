@@ -1,7 +1,8 @@
-import os
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+
 from blog.models import Post
+
 
 def post_list(request):
     # Template를 찾을 경로에서 post_list.html을 찾아서
@@ -55,12 +56,34 @@ def post_detail(request, pk):
     return render(request, 'post_detail.html', context)
 
 def post_add(request):
-    print(request)
-    # URL: /posts/add
-    # View: 이 함수
-    # Template: post_add.html
-    # form 태그 내부에
-    # input, textarea, button[type=submit]
-    # base.html의 nav 안에 /posts/add/로의 링크 하나 추가
-    # 링크 텍스트 Post Add
-    return render(request, 'post_add.html')
+    if request.method == 'POST':
+        # request.POST에 담긴 title, text를
+        # HttpResponse를 사용해서 적절히 리턴
+        # title:<입력받은 제목> text: <입력받은 텍스트>
+        author = request.user
+        title = request.POST['title']
+        text = request.POST['text']
+
+        # 위 3개의 값을 사용해서 새로운 Post 생성
+        # 생성한 Post의 title과 created_date를 HttpResponse에 적절한 문자열로 전달
+        # 출력 예) title: 파이썬, created_date: <적당한 값>
+
+        post = Post.objects.create(
+            title=title,
+            author=author,
+            text=text,
+        )
+
+        result = f'title: {post.title}, created_date: {post.created_date}'
+        return HttpResponse(result)
+
+
+    else:
+        # URL: /posts/add
+        # View: 이 함수
+        # Template: post_add.html
+        # form 태그 내부에
+        # input, textarea, button[type=submit]
+        # base.html의 nav 안에 /posts/add/로의 링크 하나 추가
+        # 링크 텍스트 Post Add
+        return render(request, 'post_add.html')
