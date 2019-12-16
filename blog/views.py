@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
 from blog.models import Post
@@ -93,14 +93,14 @@ def post_add(request):
         # 링크 텍스트 Post Add
         return render(request, 'post_add.html')
 
-
 # 숙제
 
 def post_delete(request, pk):
     # pk에 해당하는 Post를 삭제한다
     # 삭제 후에는 post_list페이지로 이동
-    pass
+    Post.objects.filter(pk=pk).delete()
 
+    return redirect('url-name-post-list')
 
 def post_edit(request, pk):
     # pk에 해당하는 Post를 수정한다
@@ -108,11 +108,28 @@ def post_edit(request, pk):
         # request.POST로 전달된 title, text내용을 사용해서
         #  pk에 해당하는 Post의 해당 필드를 수정하고 save()
         #  이후 해당 Post의 post-detail화면으로 이동
-        pass
+
+        post = get_object_or_404(Post, pk=pk)
+
+        title = request.POST['title']
+        text = request.POST['text']
+
+        post.title = title
+        post.text = text
+
+        post.save()
+
+        return redirect('url-name-post-detail',pk=post.pk)
     else:
         # 수정할 수 있는 form이 존재하는 화면을 보여줌
         # 화면의 form에는 pk에 해당하는 Post의 title, text값이 들어있어야 함 (수정이므로)
-        pass
+        post = Post.objects.get(pk=pk)
+
+        context = {
+            'post' : post,
+        }
+
+        return render(request, 'post_edit.html', context)
 
 
 def post_publish(request, pk):
@@ -120,11 +137,10 @@ def post_publish(request, pk):
     # 요청시점의 시간을 해당 Post의 published_date에 기록할 수 있도록 한다
     # 완료후에는 post-detail로 이동
     #  결과를 볼 수 있도록, 리스트 및 디테일 화면에서 published_date도 출력하도록 한다
-    pass
-
+    return redirect('url-name-post-detail', pk=post.pk)
 
 def post_unpublish(request, pk):
     # pk에 해당하는 Post의 published_date에 None을 대입 후 save()
     # 완료후에는 post-detail로 이동
     #  결과를 볼 수 있도록, 리스트 및 디테일 화면에서 published_date도 출력하도록 한다
-    pass
+    return redirect('url-name-post-detail', pk=post.pk)

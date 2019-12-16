@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="">제목</label>
+                <input type=text" name="title" class="form-control" value="{{post.title}}">
+            </div>
+            <div class="form-group">
+                <label for="">내용</label>
+                <textarea name="text" id="" rows="10" class="form-control">{{post.text}}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">edit</button>
+        </form>
+    </div>
+{% endblock %}
